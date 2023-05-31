@@ -1,0 +1,13 @@
+@import "./reset";
+@import "./variables";
+@import "./mixins";
+@import "./layouts";
+@import "./logo";
+@import "./loader";
+
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}

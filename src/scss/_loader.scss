@@ -1,0 +1,29 @@
+.loader {
+  pointer-events: none;
+  text-align: center;
+
+  img {
+    width: 50%;
+
+    @media (min-width: $sm) {
+      width: 100px;
+    }
+
+    @media (min-width: $md) {
+      width: 150px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: loader-spin infinite 2s linear;
+    }
+  }
+}
+
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
