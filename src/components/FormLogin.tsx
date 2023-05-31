@@ -14,9 +14,11 @@ import {
   selectAuthError,
   selectAuthIsLoading,
 } from "../store";
+import { useNavigate } from "react-router-dom";
 
 const FormLogin: FC = () => {
   const dispatch = useAppDispatch(),
+    navigate = useNavigate(),
     error = useAppSelector(selectAuthError),
     isLoading = useAppSelector(selectAuthIsLoading),
     [state, setState] = useState<ICredentials>({
@@ -84,7 +86,16 @@ const FormLogin: FC = () => {
         sx={{ mt: 3, mb: 2 }}
         disabled={isLoading}
       >
-        Sign In
+        LogIn
+      </Button>
+
+      <Button
+        type="button"
+        fullWidth
+        disabled={isLoading}
+        onClick={() => navigate("/")}
+      >
+        HOME
       </Button>
     </Box>
   );

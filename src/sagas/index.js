@@ -17,7 +17,7 @@ export function* workerSaga({ payload }) {
     const { data } = yield api.user();
     yield put(login(data.data));
   } catch {
-    yield put(setAuthError("Имя пользователя или пароль введены не верно"));
+    yield put(setAuthError("Invalid credentials"));
   }
 
   yield put(setAuthIsLoaded());

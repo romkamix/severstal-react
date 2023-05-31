@@ -59,7 +59,7 @@ export const loginAsync = (payload: ICredentials) => ({
 //     .then(() => api.user())
 //     .then(({ data: { data } }) => dispatch(login(data)))
 //     .catch((e) =>
-//       dispatch(setAuthError("Имя пользователя или пароль введены не верно"))
+//       dispatch(setAuthError("Invalid credentials"))
 //     )
 //     .then(() => dispatch(setAuthIsLoaded()));
 // };
