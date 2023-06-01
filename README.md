@@ -11,6 +11,7 @@ SCSS
 
 # Ссылки
 
+https://github.com/romkamix/severstal-react - Git
 http://sible.ru - фронт
 http://api.sible.ru - бэк
 https://jsonplaceholder.typicode.com - сторонний API для моковых данных
