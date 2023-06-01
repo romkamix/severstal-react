@@ -17,7 +17,7 @@ const links = [
   { title: "Home", to: "/" },
   { title: "News", to: "/news" },
   { title: "Profile", to: "/profile" },
-  { title: "NotExists", to: "/asdgsdg" },
+  { title: "NotExists", to: "/notexists" },
 ];
 
 function Navbar() {

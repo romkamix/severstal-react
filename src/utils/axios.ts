@@ -1,7 +1,7 @@
-//! @/plugins/_axios.js
+//! @/utils/axios.js
 import axios from "axios";
 import store from "../store";
-import { notyError } from "../store/_noty";
+import { notyError, logout } from "../store";
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "";
 axios.defaults.withCredentials = true;
@@ -31,6 +31,7 @@ axios.interceptors.response.use(
         switch (error.response.status) {
           case 401:
           case 419:
+            store.dispatch(logout());
             break;
 
           default:

@@ -50,20 +50,6 @@ export const loginAsync = (payload: ICredentials) => ({
 
 // ASYNC ACTIONS
 //! -------------- ТИПИЗИРОВАТЬ dispatch!!! ---------------------------
-// export const loginAsync = (payload: ICredentials) => (dispatch: any) => {
-//   dispatch(setAuthIsLoading());
-
-//   api
-//     .csrf()
-//     .then(() => api.login(payload))
-//     .then(() => api.user())
-//     .then(({ data: { data } }) => dispatch(login(data)))
-//     .catch((e) =>
-//       dispatch(setAuthError("Invalid credentials"))
-//     )
-//     .then(() => dispatch(setAuthIsLoaded()));
-// };
-
 export const logoutAsync = () => (dispatch: any) => {
   dispatch(setAuthIsLoading());
 

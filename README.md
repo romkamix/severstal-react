@@ -1,4 +1,128 @@
+# description
+
+# Стек:
+
+JS+TS
+react, react-router
+redux, redux-toolkit, redux-thunk, redux-persist, redux-saga
+react-toastify
+material ui
+SCSS
+
+# Ссылки
+
+http://sible.ru - фронт
+http://api.sible.ru - бэк
+https://jsonplaceholder.typicode.com - сторонний API для моковых данных
+
+# Бекэнд:
+
+laravel, laravel-sanctum
+
+# Бекэнд роуты:
+
+GET: /sanctum/csrf-cookie - получить csrf_token в куки
+POST: /login - авторизация
+GET: /logout - выход из аккаунта
+GET: /user - данные об авторизованном пользователе
+
+# Макеты (layouts):
+
+default - навигационная панель, контент на всю ширину, контент прижат к хедеру
+centered - навигационная панель, минимальная высота контейнера - высота viewport, контент выводится по центру (по вертикали и горизонтали), на мобильных устройствах контент по вертикали прижат к хедеру
+login - аналогичен centered, без навигационной панели
+
+# Адаптивная верстка
+
+Адаптивная верстка. Корректно отображается на мобильных устройствах.
+На мобильных устройствах в навигационной панели вместо ссылок отображается кнопка с выпадающим меню (бургер)
+
+# Страницы (в скобках указан layout):
+
+/ - домашняя (centered)
+/news - новости (default)
+/news/:id - новость (centered)
+/profile - страница профиля (centered)
+/login - страница авторизации (login)
+/notexists - случайная несуществующая ссылка, выводится страница 404 (centered)
+
+# Страница NEWS
+
+Данные подгружаются через асинхронный запрос.
+Реализована пагинация.
+Во время загрузки данных и переходов по страницам отображается лоадер.
+
+# Страница PROFILE
+
+Защищенная страница, требуется авторизация.
+При переходе на страницу, если пользователь не авторизован, то его автоматически перенаправляет на страницу авторизации.
+
+# Страница LOGIN и авторизация
+
+- username: Admin
+- password: 12345
+
+Во время проверки введенных данных форма авторизации блокируется.
+Если произошла ошибка, то выводится сообщение, что данные для входа указаные неправильно.
+При переходе на страницу, если пользователь авторизован, или непосрественно после отправки и успешной проверки формы пользователя автоматически перенаправляет на страницу PROFILE.
+
+# Навигационная панель
+
+Если пользователь не авторизован, в навигационной панели отображается кнопка для перехода на страницу.
+Если пользователь авторизован, в навигационной панели отображается кнопка для выхода из аккаунта.
+
+# REDUX, REDUX=TOOLKIT
+
+Если пользователь авторизован, данные о сессии сохраняются в куки HttpOnly.
+После успешной авторизации отправляется запрос на получение данных профиля пользователя, которые сохраняются в Redux.
+Наличие этих данных в хранилище говорит об успешной авторизации пользователя (аналогично сохранению JWT токена).
+Если на сервер уйдет неавторизованный запрос (например, куки просрочены, истек срок действия или изменен csrf токен), профиль пользователя в хранилище стирается и требуется снова пройти авторизацию.
+Для улучшения механизма авторизации можно дополнительно запоминать время действия токенов и куки и автоматическим продлевать до их истечения.
+
+# REDUX-PERSIST
+
+Чтобы данные авторизации не сбрасывались при перезагрузке страницы, подключена библиотека Redux-persist, которая автоматически запоминает текущее состояние отдельных веток хранилища в localStorage и подхватывает их при загрузке страницы.
+
+# REDUX-THUNK, REDUX-SAGA
+
+Для выполнения в REDUX асинхронных запросов на авторизацию использовались REDUX-THUNK (механизм уже встроен в REDUX-TOOLKIT) и REDUX-SAGA
+Авторизация через REDUX-SAGA, выход из аккаунта через REDUX-THUNK
+Реализация через разные механизмы для демонстрации работы.
+
+# NOTY + TOASTIFY
+
+Реализована система уведомлений через Toastify.
+Уведомления сохраняются в Redux.
+Любой компонент может создавать уведомления (info, success, warning, error).
+Компонент Noty отслеживает соответствующую ветку в Redux и отображает поступающие уведомления через библиотеку всплывающих уведомлений Toastify.
+
+# Кнопка LOGOUT в навигационной панели
+
+- Запрос на выход на сервер.
+- Удаление профиля из хранилища.
+- Кнопка "Logout" в навигационной панели меняется на "Login"
+- Если пользователь находился на защищенной странице, то его сразу перебрасывает на страницу авторизации "/login"
+
+# AXIOS
+
+Для выполнения асинхронных запросов используюеся AXIOS.
+На все запросы в механизм AXIOS повешен слушатель, который при ошибках создает уведомления.
+Если код ошибки связан с авторизацией (для примера это 401 Unauthorized и 419 Authentication Timeout) дополнительно сбрасывается авторизация в хранилище.
+
+Это можно проверить:
+
+- авторизоваться, удалить сессионные куки и перезагрузить страницу.
+
+Что произойдет:
+
+- Появится уведомление об ошибке авторизации (401), потому что при перезагрузке страницы выполняется запрос профиля пользователя, требующий авторизации, а ее нет из-за отсутствующих куки.
+- Удаление профиля из хранилища.
+- Кнопка "Logout" в навигационной панели меняется на "Login"
+- Если пользователь находился на защищенной странице, то его сразу перебрасывает на страницу авторизации "/login"
+
 # severstal-react
+
+# ТЗ
 
 Стэк:
 react, redux, saga, react-router, SASS (SCSS), ui на выбор: ant, material UI или без ui-фрейморвка
@@ -31,50 +155,3 @@ password: 12345
 Дополнительно:
 Код оформить на GitHub/GitLab с небольшим описанием Readme.md
 Если у вас не получается сделать часть задания, присылайте решение в любом состоянии, указывая что именно не вышло и почему.
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

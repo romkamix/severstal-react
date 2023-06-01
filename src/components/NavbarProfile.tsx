@@ -1,14 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { logout, selectIsLoggedIn } from "../store";
+import { login, logoutAsync, selectIsLoggedIn } from "../store";
 import { useAppSelector, useAppDispatch } from "../hooks";
+import { auth as api } from "../api";
+import { useEffect } from "react";
 
 function NavbarProfile() {
   const navigate = useNavigate(),
     dispatch = useAppDispatch(),
     isLoggedIn = useAppSelector(selectIsLoggedIn),
-    handleClick = () => dispatch(logout()),
+    handleClick = () => dispatch(logoutAsync()),
     handleNavigate = (to: string) => navigate(to);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      api
+        .user()
+        .then(({ data }) => dispatch(login(data.data)))
+        .catch((e) => console.log(e));
+    }
+
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
